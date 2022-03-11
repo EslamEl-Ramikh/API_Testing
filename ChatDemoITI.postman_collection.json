@@ -1,0 +1,1487 @@
+{
+	"info": {
+		"_postman_id": "14037227-c386-4fd2-8fc8-aa1ae81614b7",
+		"name": "ChatDemoITI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Happy Scenario Automated",
+			"item": [
+				{
+					"name": "Create Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"ServiceSid\",result.sid);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Service Created Successfully!!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "FriendlyName",
+									"value": "Service1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services"
+							],
+							"query": [
+								{
+									"key": "friendlyName",
+									"value": "Ramikh",
+									"disabled": true
+								},
+								{
+									"key": "Username",
+									"value": "AC5b8b1ad194c2516a2a3b4ea92b042b47",
+									"disabled": true
+								},
+								{
+									"key": "Password",
+									"value": "f31c3a5e7deff2998fad91a90d32f14a",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"ChannelSid\",result.sid);\r",
+									"\r",
+									"pm.test(\"Channel Created Successfully!!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Channel Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request Passed !!\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"Members_Count\", result.members_count);\r",
+									"\r",
+									"pm.test(\"Validatig Channel ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.sid).to.eql(pm.globals.get(\"ChannelSid\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}\n",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Channels in a Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"UserSid\",result.sid);\r",
+									"\r",
+									"pm.globals.set(\"UserIDENTITY\",result.identity );\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000 ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"User Created Successfully!!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Identity",
+									"value": "{{UserIDENTITY}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Identity",
+									"value": "{{$randomAdjective}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Passed Request !!\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validatig User ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.sid).to.eql(pm.globals.get(\"UserSid\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users/{{UserSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users",
+								"{{UserSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users in a Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to a Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User Joined the Channel Successfully !!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Identity",
+									"value": "{{UserIDENTITY}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Members",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"UserSid\",result.sid);\r",
+									"\r",
+									"pm.globals.set(\"UserIDENTITY\",result.identity );\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000 ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"User Created Successfully!!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Identity",
+									"value": "{{UserIDENTITY}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Identity",
+									"value": "{{$randomAdjective}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to a Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User Joined the Channel Successfully !!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Identity",
+									"value": "{{UserIDENTITY}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Members",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Channel Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request Passed !!\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"Members_Count\", result.members_count);\r",
+									"\r",
+									"pm.test(\"Validatig Channel ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.sid).to.eql(pm.globals.get(\"ChannelSid\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}\n",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send a Message",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Message Sent Successfully !!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"MessageSid\", result.sid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "from",
+									"value": "{{UserIDENTITY}}",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "{{$randomAdjective}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Messages",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Messages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Messages",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Last Messages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"Message Deleted Successfully !!\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Messages/{{MessageSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Messages",
+								"{{MessageSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Last Messages (To FAIL)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"Message Deleted Successfully !!\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Messages/{{MessageSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Messages",
+								"{{MessageSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User Deleted Successfully\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000 ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users/{{UserSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users",
+								"{{UserSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Channel Deleted Successfully !!\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"Service Deleted Successfully\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Service",
+			"item": [
+				{
+					"name": "Create Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"ServiceSid\",result.sid);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Service Created Successfully!!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "FriendlyName",
+									"value": "Service1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services"
+							],
+							"query": [
+								{
+									"key": "friendlyName",
+									"value": "Ramikh",
+									"disabled": true
+								},
+								{
+									"key": "Username",
+									"value": "AC5b8b1ad194c2516a2a3b4ea92b042b47",
+									"disabled": true
+								},
+								{
+									"key": "Password",
+									"value": "f31c3a5e7deff2998fad91a90d32f14a",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Service Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request Passed\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"Validatig Service ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.sid).to.eql(pm.globals.get(\"ServiceSid\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"Service Deleted Successfully\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users in a Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Channels in a Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Channel",
+			"item": [
+				{
+					"name": "Create Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"ChannelSid\",result.sid);\r",
+									"\r",
+									"pm.test(\"Channel Created Successfully!!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Channel Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Request Passed !!\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"Members_Count\", result.members_count);\r",
+									"\r",
+									"pm.test(\"Validatig Channel ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.sid).to.eql(pm.globals.get(\"ChannelSid\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}\n",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Channel Deleted Successfully !!\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign User to a Channel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User Joined the Channel Successfully !!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Identity",
+									"value": "{{UserIDENTITY}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Members",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Members"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"UserSid\",result.sid);\r",
+									"\r",
+									"pm.globals.set(\"UserIDENTITY\",result.identity );\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000 ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"User Created Successfully!!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Identity",
+									"value": "{{UserIDENTITY}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Identity",
+									"value": "{{$randomAdjective}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Passed Request !!\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validatig User ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.sid).to.eql(pm.globals.get(\"UserSid\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users/{{UserSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users",
+								"{{UserSid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User Deleted Successfully\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000 ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Users/{{UserSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Users",
+								"{{UserSid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message",
+			"item": [
+				{
+					"name": "Send a Message",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Message Sent Successfully !!\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"let result = pm.response.json();\r",
+									"pm.globals.set(\"MessageSid\", result.sid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "from",
+									"value": "{{UserIDENTITY}}",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "{{$randomAdjective}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Messages",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Messages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Messages",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Last Messages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"Message Deleted Successfully !!\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/Services/{{ServiceSid}}/Channels/{{ChannelSid}}/Messages/{{MessageSid}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"Services",
+								"{{ServiceSid}}",
+								"Channels",
+								"{{ChannelSid}}",
+								"Messages",
+								"{{MessageSid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "4e2b902176a64afd9d5b910cf2f48a34",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "ACd4fe4c56c358e2e4237383cfe77885d8",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
